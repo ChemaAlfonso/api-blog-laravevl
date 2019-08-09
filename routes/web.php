@@ -24,3 +24,5 @@ Route::get('/prueba/{nombre}', function($nombre) {
 });
 
 Route::get('/pruebas/animales', 'pruebaController@index');
+
+Route::get('/testOrm', 'pruebaController@testOrm');
