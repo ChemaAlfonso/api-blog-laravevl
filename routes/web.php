@@ -23,6 +23,17 @@ Route::get('/prueba/{nombre}', function($nombre) {
     ));
 });
 
+// Rutas de prueba
 Route::get('/pruebas/animales', 'pruebaController@index');
-
 Route::get('/testOrm', 'pruebaController@testOrm');
+
+// Rutas de Api
+
+    // Rutas de prueba
+    Route::get('/usuario/pruebas','UserController@pruebas');
+    Route::get('/categoria/pruebas','CategoryController@pruebas');
+    Route::get('/post/pruebas','PostController@pruebas');
+
+    // Rutas de usuario
+    Route::post('/api/register','UserController@register');
+    Route::post('/api/login','UserController@login');
