@@ -49,8 +49,9 @@ class UserController extends Controller
         } else {
 
             // Cifrar contraseña
-            $pass = password_hash($params->password, PASSWORD_BCRYPT, ['cost' => 4]);            
-
+            $pass = hash('sha256', $params->password);  
+            //$pass = password_hash($params->password, PASSWORD_BCRYPT, ['cost' => 4]);            
+            
             // Crear usuario
             $user = new User();
             $user->name = $params_array['name'];
@@ -76,6 +77,15 @@ class UserController extends Controller
     }
 
     public function login(Request $request){
-        return "Función login de UserController";
+
+        // Se llama al alias \JwtAuth()
+        $jwtAuth = new \JwtAuth();
+
+        $email = "contacto@tempuscode.com"; 
+        $password = "chema";
+        //$password = password_hash($password, PASSWORD_BCRYPT, ['cost' => 4]); 
+        $password = hash('sha256', $password); 
+        
+        return response()->json($jwtAuth->singup($email, $password), 200);
     }
 }
