@@ -81,6 +81,35 @@ class UserController extends Controller
         // Se llama al alias \JwtAuth()
         $jwtAuth = new \JwtAuth();
 
+        // Recibir datos por post
+        $json = $request->input('json', null);
+        $params = json_decode($json);
+        $params_array = json_decode($json, true);
+
+        // Validar esos datos
+        $validate = \Validator::make($params_array, [
+            'email'     => 'required|email', // unico:tablaObjetivo
+            'password'  => 'required',
+        ]);
+
+        if ($validate->fails()){            
+            $data = array(
+                'status'  => 'error',
+                'code'    => 400,
+                'message' => 'El usuario no se ha logeado correctamente',
+                'errors'  => $validate->errors()
+            );
+            
+            return response()->json($data, $data['code']);
+
+        } else {
+            // Cifrar contraseña
+            $password = hash('sha256', $params->password); 
+            
+            // Devolver token o datos
+            $jwtAuth->singup();
+
+        }
         $email = "contacto@tempuscode.com"; 
         $password = "chema";
         //$password = password_hash($password, PASSWORD_BCRYPT, ['cost' => 4]); 
